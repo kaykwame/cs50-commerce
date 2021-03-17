@@ -1,0 +1,60 @@
+body {
+    padding: 10px;
+    background-color: #FBFEFF;
+}
+
+.header {
+  /* background-image: linear-gradient(to bottom, #B266FD, #A4D9FF); */
+  background-color: #1A1A29;
+  color: white;
+  font-family: "Lato", sans-serif;
+  padding-bottom: 5px;
+}
+
+.nav-item a{
+  color: #FF8745;
+}
+
+body{
+  font-family: "Apple Chancery";
+}
+
+img {
+  display: block;
+  margin-bottom: 15px;
+  -webkit-box-shadow: 0px 0px 5px 0px #ccc;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.container-listing{
+  text-align: center;
+  /* background-image: linear-gradient(to bottom, #A4D9FF, #B266FD); */
+  background-color: #1A1A29;
+  color: white;
+  font-family: "Lato", sans-serif;
+  padding-left: 15px;
+  padding-bottom: 10px;
+}
+
+.container-styled{
+  background-color: #FBFBFB;
+  height: 650px;
+  padding-top: 15px;
+  font-family: 'Raleway Bold', sans-serif;
+}
+
+.listingtext{
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+h2, h1{
+  padding-top: 10px;
+  font-family: "Lato", sans-serif;
+}
+
+h4{
+  text-align: center;
+  color: #5D6263;
+}

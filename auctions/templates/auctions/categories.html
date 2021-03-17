@@ -1,0 +1,21 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+  {% if user.is_authenticated %}
+    <div class="row">
+      <div class="col-md-12">
+        <div class="container-listing">
+          <h2>Categories</h2>
+        </div>
+        <br>
+        <div class="container-styled">
+          {% for item in items %}
+            <div class="card card-signin my-2 px-2">
+              <a href="{% url 'listings_by_categories' pk=item.pk category=item %}"><li>{{item}}</li></a>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}

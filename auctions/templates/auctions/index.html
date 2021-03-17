@@ -1,0 +1,100 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+{% if user.is_authenticated %}
+<div class="container-listing">
+  <div class="row">
+    <div class="col-md-12">
+      <h2>Active Listings</h2>
+    </div>
+  </div>
+</div>
+<br>
+<div>
+  <a href="{% url 'create_listing' %}" class="btn btn-sm btn-primary" style="border: none; background-color: #FF8745;">Create a listing</a>
+</div>
+
+
+<div class="container">
+  <div class="row">
+    {% for listing in active_listings %}
+          <div class="col-md-4">
+            <br>
+            <div class="container-styled">
+              <h4>{{ listing.listing_title }}</h4>
+              {% if listing.listing_image %}
+                <img src="{{ listing.listing_image.url }}" width="95%" height="40%">
+              {% endif %}
+
+              <div class="listingtext">
+              <p>{{ listing.listing_description }}</p>
+              {% if listing.listing_image_url %}
+              <p><a href="{{ listing.listing_image_url }}">View photo</a></p>
+              {% endif %}
+
+              {% if listing.listing_bid %}
+                <b><p style="color: #9DA7A8;">Initial Price: <strike>${{ listing.listing_price }}</strike></p></b>
+                <b><p style="color: #9DA7A8;">Current price: ${{ listing.listing_bid }}</p></b>
+              {% else %}
+                <b><p style="color: #9DA7A8;">Current Price: ${{ listing.listing_price }}</p></b>
+              {% endif %}
+
+              <small class="text-muted"><p>Posted on {{ listing.listing_date_time_created }} by {{listing.listing_poster}}</p></small>
+              <div>
+                <a href="{% url 'listing_details' pk=listing.pk %}" class="btn btn-sm btn-primary" style="border: none; background-color: #FF8745;">View listing</a>
+              </div>
+              </div>
+            </div>
+          </div>
+    {% endfor %}
+  </div>
+</div>
+
+    <br>
+    <br>
+    <br>
+
+<div class="container-listing">
+  <div class="row">
+    <div class="col-md-12">
+      <h2>Inactive Listings</h2>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    {% for listing in inactive_listings %}
+    <div class="col-md-4">
+      <br>
+
+      <div class="container-styled">
+        <h4>{{ listing.listing_title }}</h4>
+        {% if listing.listing_image %}
+          <img src="{{ listing.listing_image.url }}" width="95%" height="40%">
+        {% endif %}
+        <div class="listingtext">
+          <p>{{ listing.listing_description }}</p>
+          {% if listing.listing_image_url %}
+          <p><a href="{{ listing.listing_image_url }}">View photo</a></p>
+          {% endif %}
+
+          {% if listing.listing_bid %}
+            <b><p style="color: #9DA7A8;">Initial Price: <strike>${{ listing.listing_price }}</strike></p></b>
+            <b><p style="color: #9DA7A8;">Winning bid: ${{ listing.listing_bid }}</p></b>
+          {% else %}
+            <b><p style="color: #9DA7A8;">Final Price: ${{ listing.listing_price }}</p></b>
+          {% endif %}
+          <!-- <b><p style="color: #9DA7A8;">Initial price: ${{ listing.listing_price }}</p></b> -->
+          <p style="color: #DA614E;">Winner: {{ listing.listing_winner }}</p>
+          <small class="text-muted"><p>Posted on {{ listing.listing_date_time_created }} by {{listing.listing_poster}}</p></small>
+          <div>
+            <a href="{% url 'listing_details' pk=listing.pk %}" class="btn btn-sm btn-primary" style="border: none; background-color: #FF8745;">View listing</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+{% endblock %}

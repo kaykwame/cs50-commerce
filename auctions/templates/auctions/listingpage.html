@@ -1,0 +1,104 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+{% if user.is_authenticated %}
+<div class="container">
+  <div class="row">
+      <div class="col-md-6">
+
+        <div>
+          {% if messages %}
+            <ul class="messages">
+              {% for message in messages %}
+                <p><li{% if message.tags %} class="{{ message.tags }}"{% endif %} style="color: red;">{{ message }}</li></p>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </div>
+
+        <div class="container-styled" style="height: 800px;">
+          <h4>{{ listing.listing_title }}</h4>
+          {% if listing.listing_image %}
+            <img src="{{ listing.listing_image.url }}" width="95%" height="40%">
+          {% endif %}
+          <div class="listingtext">
+          <p>{{ listing.listing_description }}</p>
+          {% if listing.listing_image_url %}
+            <p><a href="{{ listing.listing_image_url }}">View photo</a></p>
+          {% endif %}
+          <b><p style="color: #9DA7A8;">Price: ${{ listing.listing_price }}</p></b>
+          <small class="text-muted"><p>Posted on {{ listing.listing_date_time_created }} by {{listing.listing_poster}}</p></small>
+
+          {% if user != listing.listing_poster and added == False  %}
+            <div class="">
+              <a href="{% url 'add_to_watchlist' pk=listing.pk %}" class="btn btn-sm btn-secondary">Add to Watchlist</a>
+            </div>
+          {% endif %}
+
+          {% if user != listing.listing_poster and added == True  %}
+            <div class="">
+              <form action="{% url 'remove_from_watchlist' pk=listing.pk %}" method="POST">
+                {% csrf_token %}
+                <input class="btn btn-sm btn-secondary" type="submit" value="Remove from watchlist" />
+              </form>
+            </div>
+          {% endif %}
+
+
+          <br>
+
+
+          {% if user.is_authenticated and listing.listing_poster != user %}
+            <small class="text-muted"><p>Highest bid so far: ${{ latest_bid_amount }}, by {{latest_bid_maker}}</p></small>
+            <form action="{% url 'bid_for_item' pk=listing.pk %}" method="POST">
+              {% csrf_token %}
+              {{ bid_form|safe }}
+              <br><br>
+              <input style="border: none; background-color: #FF8745;" class="btn btn-sm btn-secondary" type="submit" value="Place a bid" />
+            </form>
+          {% endif %}
+
+          {% if user.is_authenticated and listing.listing_poster == user %}
+            <form action="{% url 'close_bid' pk=listing.pk %}" method="POST">
+              {% csrf_token %}
+              <input style="border: none; background-color: #FF8745;" class="btn btn-sm btn-secondary" type="submit" value="Close bid" />
+            </form>
+          {% else %}
+
+          {% endif %}
+        </div>
+      </div>
+    </div>
+            <br>
+
+      <div class="col-md-6">
+        <div class="container-styled" style="height: 650px;">
+          <div class="listingtext">
+            <br>
+            <form action="{% url 'add_comment' pk=listing.pk %}" method="post">
+              {% csrf_token %}
+              {{ comment_form.as_p|safe }}
+              <input style="border: none; background-color: #FF8745;" class="btn btn-sm btn-secondary" type="submit" value="Post comment" />
+            </form>
+            <br>
+            <b>Comments</b>
+            {% if comments %}
+            {% for comment in comments %}
+              <div class="card card-signin my-2" style="padding-left: 10px; background-color: #D5E9FD;">
+                {{ comment.comment_content }}
+                <br>
+                <small class="text-muted">From: {{ comment.comment_posterusername }}</small>
+              </div>
+            {% endfor %}
+            {% else %}
+              <ul>
+                <li><small class="text-muted"><p>No comments yet</p></small></li>
+              </ul>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+{% endif %}
+{% endblock %}

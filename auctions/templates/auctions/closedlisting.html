@@ -1,0 +1,50 @@
+{% extends "auctions/layout.html" %}
+
+
+
+{% block body %}
+{% if user.is_authenticated %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-2">
+
+    </div>
+
+    <div class="col-md-8">
+        {% if messages %}
+            {% for message in messages %}
+                <p{% if message.tags %} class="{{ message.tags }}"{% endif %} style="color: red;">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+          <br>
+
+
+          <div class="container-styled" style="height: 1000px;">
+
+            <h4>{{ listing.listing_title }}</h4>
+            {% if listing.listing_image %}
+              <img src="{{ listing.listing_image.url }}" width="95%" height="50%">
+            {% endif %}
+
+            <div class="listingtext">
+            <p>{{ listing.listing_description }}</p>
+            {% if listing.listing_image_url %}
+            <p><a href="{{ listing.listing_image_url }}">View photo</a></p>
+            {% endif %}
+            <p>Listing category: {{ listing.listing_category }}</p>
+            <p>Description: {{ listing.listing_description }}</p>
+            <b><p style="color: #9DA7A8;">Initial price: <strike>${{ listing.listing_price }}</strike></p></b>
+
+            <p style="color: #EB8F73">Winning bid: ${{ latest_bid_amount }}</p>
+            <small class="text-muted"><p>Posted on {{ listing.listing_date_time_created }} by {{ listing.listing_poster }}</p></small>
+            </div>
+          </div>
+    <div class="col-md-2">
+
+    </div>
+
+  </div>
+</div>
+{% endif %}
+{% endblock %}

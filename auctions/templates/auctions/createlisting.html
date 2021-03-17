@@ -1,0 +1,47 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+  {% if user.is_authenticated %}
+          <div>
+            {% if messages %}
+              <ul class="messages">
+                {% for message in messages %}
+                  <p><li{% if message.tags %} class="{{ message.tags }}"{% endif %} style="color: red;">{{ message }}</li></p>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-2">
+          </div>
+
+          <div class="col-md-8">
+            <div class="container-listing">
+              <h2>Create a listing</h2>
+            </div>
+              <div class="container-styled" style="height: 750px;">
+                <div class="listingtext">
+            <form action="{% url 'create_listing' %}" method="POST" enctype="multipart/form-data">
+              {% csrf_token %}
+              {{ form.media }}
+              {{ form.as_p|safe }}
+              <input style="border: none; background-color: #FF8745;" class="btn btn-sm btn-secondary" type="submit" value="Create listing">
+            </form>
+            <br>
+            <br>
+            <br>
+            <div class="">
+              <form action="{% url 'add_category' %}" method="POST">
+                {% csrf_token %}
+                {{ formC.as_p|safe }}
+                <input style="border: none; background-color: #FF8745;" class="btn btn-sm btn-secondary" type="submit" value="Create category">
+              </form>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}
+{% endblock %}
