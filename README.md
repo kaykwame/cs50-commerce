@@ -1,5 +1,5 @@
 # cs50-commerce
-
+--
 An eBay-like e-commerce auction site with Python, html, CSS and bootstrap, that allows users to: 
 Post listings. 
 Create new categories for listings.
